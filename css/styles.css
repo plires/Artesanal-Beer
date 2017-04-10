@@ -288,7 +288,142 @@ a {
 /* section caracteristicas en home END */
 
 
+/*REGISTER.PHP*/
 
+#formulario_registro h2{
+	max-width: 98%;
+	margin: 0 2% 30px 2%;
+	padding-top: 15px;
+}
+
+.main-content{
+  background-color: #e3e3e3;
+}
+
+.register{
+  padding: 15px 0;
+}
+
+.register input, .register select{
+	margin-top: 5px;
+	margin-bottom: 15px;
+	padding: 10px;
+	border-radius: 5px;
+	border: none;
+	width: 100%;
+	font-size: 1em;
+}
+
+.register label{
+  display: block;
+  margin: .5em 0 0 0;
+}
+
+button{
+	text-align: center;
+	padding: 10px;
+	margin-top: 15px;
+	border: none;
+	border-radius: 10px;
+  	background-color: rgb(48, 48, 48);
+  	color: #caced4;
+  	font-size: 1.2em;
+}
+
+#enviar{
+	float: left;
+}
+
+#reset{
+	float: right;
+}
+
+.register input:focus{
+  border: 2px solid #000;
+  background: #f3f3f3;
+}
+fieldset{
+  width: 95%;
+  margin: auto;
+}
+
+
+
+/*aca EMPIEZA EL FOOTER*/
+
+#footer {
+	overflow: hidden;
+	text-align: center;
+	color: #caced4;
+	background-color: #414141;
+  	border-top: 25px solid #fcc112;
+}
+
+#footer p {
+	text-align: left;
+}
+
+#footer h2 {
+	margin: 0;
+	margin-bottom: 30px;
+}
+
+
+.main-footer .logo img{
+  width: 50%;
+}
+
+.social-networks{
+  border-top: 1px solid #caced4;
+  padding-top: 15px;
+  margin-bottom: 30px;
+}
+
+
+
+.social-networks img{
+	max-width: 45px;
+}
+
+
+.main-footer-directions{
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+
+.main-footer-secondblock input{
+  width: 90%;
+  padding: 10px;
+  font-size: 1em;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.main-footer-secondblock .submit-button{
+  background-color: rgb(48, 48, 48);
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 1em;
+  margin-bottom: 30px;
+}
+
+.main-footer-firstblock, .main-footer-secondblock {
+	padding-top: 30px;
+}
+
+.ion-ios-location, .ion-ios-telephone, .ion-email {
+	margin-left: 10px;
+	font-size: 1.2em;
+}
+.main-footer-directions a{
+	color: #caced4;
+	font-size: 1.2em;
+}
+
+#footer a:hover{
+	opacity: 0.6;
+}
 
 
 /*******************************************/
@@ -378,14 +513,54 @@ section.fondo_color_principal{padding: 10px;margin-bottom: 30px; overflow: hidde
 
 
 
-
-
 	/* Categorias destacadas en home START */
 
 	.newsletter_enviar {
 		max-width: 30%;
 	}
 	/* Categorias destacadas en home END */
+
+
+	/* register START */
+	.contenedores_button{
+		text-align: center;
+	}
+
+	#enviar, #reset{
+		float: none;
+		margin-right: 15px;
+		margin-left: 15px;
+	}
+	/* register END */
+
+
+
+
+
+	/* footer Start*/
+	.logo{
+		text-align: left;
+	}
+
+	.main-footer-firstblock, .main-footer-secondblock {
+		float: left;
+		max-width: 46%;
+		margin-left: 2%;
+		margin-right: 2%;
+	}
+
+	.social-networks img{
+	  margin-left: 10px;
+	  margin-right: 10px;
+	}
+
+	.main-footer-directions{
+		text-align: left;
+	}
+	.social-networks{
+		margin: 5px;
+	}
+	/* footer  END */
 }
 
 /*******************************************/
