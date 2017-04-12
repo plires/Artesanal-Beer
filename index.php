@@ -11,11 +11,42 @@
 	<link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
+	
+	<!--Variable que activa la clase en NAV-->
+	<?php $activo = "home"; ?>
+	
+	<!--Include HEADER-->
+	<?php include_once('includes/header.php'); ?>
 
+	<!--Include SLIDE HOME-->
 	<?php include_once('includes/slide.php'); ?>
 
 	<!--Container start-->
 	<div class="container">
+
+		<!--Sub - container Start-->
+		<div class="sub_container">
+
+			<h1 class="text_center titulo_h1">Cerveza Artesanal</h1>
+			<hr>
+			<h2>Vos la haces, te ayudamos a venderla</h2>
+
+			<p>
+			Somos un grupo de personas amantes de la buena cerveza artesanal.
+			</p>
+
+			<p>
+			Concientes del numeroso crecimiento de productores de cervezas artenalales y caseras que chocaban contra la falta de contactos para venderla, o la falta de logística para entregarla fue que decidimos implementar una plataforma de comercio electronico para que puedas vender, cobrar y entregar tu cerveza.
+			</p>
+			
+			<h3 class="h3_home">
+				Por eso te proponemos que hagas lo que mas te gusta y mejor te sale, hacer cerveza...de lo aburrido nos encargamos nosotros y nuestra plataforma."
+			</h3>
+
+			<hr class="margin_bottom_30">
+
+		</div>
+		<!--Sub - container end-->
 
 		<!--Productos start-->
 		<section class="main_products">
@@ -116,11 +147,13 @@
 
 			<!--Sub - container Start-->
 			<div class="sub_container">
+
 				<h4 class="text_center">Ellos confian en nuestra plataforma. Sumate vos también con tu cerveza!</h4>
 				<hr>
 				<p class="avatar_titulo_comentarios">
 					Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat vomy nibh euismod tincidunt ut laoreet dolore magn.
 				</p>
+
 			</div>
 			<!--Sub - container end-->
 
@@ -305,6 +338,13 @@
 
 	</section>
 	<!--Section caracteristicas del servicio end-->
+
+	<!--Include HEADER-->
+	<?php include_once('includes/footer.php'); ?>
+
+	<!--Scripts Menu-->
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/index.js"></script>
 	
 </body>
 </html>
