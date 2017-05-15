@@ -2,7 +2,7 @@
 
 Integrantes: 
 * [Pablo Lires](https://github.com/plires)
-* Santiago Nuez
+* Santiago Nuñez
 * Cristian Ruscio
 
 ### Descripción
@@ -29,7 +29,7 @@ Maquetación de secciones:
 * Login de Usuarios.
 * FAQ.
 
-###### Competencias de Santiago Nuez
+###### Competencias de Santiago Nuñez
 
 * Maquetacion de la sección de preguntas frecuentes (html-css).
 * Maquetacion de la sección del header, común para todo el sitio (html-css).
@@ -47,3 +47,36 @@ Maquetación de secciones:
 * Maquetacion de la sección de login de usuarios (html-css).
 * Agregado de contenido a otras secciones.
 * Unificación de todas las partes. Limpieza y comentarios de código en html y css
+
+
+1.0.1
+* Versión Beta
+
+### Descripción
+
+En esta version se agrego funcionabilidad a todos los formularios de registro, logueo y perdida de password.
+La presistencia de datos por el momento esta funcionando sobre un archivo JSON.
+
+Maquetación de nuevas secciones:
+* Cuenta de usuarios.
+* Recuperacion de contraseñas.
+
+###### Competencias de Santiago Nuñez
+
+* Desarrollo de nuevas funciones.
+
+* Supervision de todas las partes. Limpieza y comentarios de código en html y css
+* Usuario tester para deteccion de errores y envio de sugerencias.
+
+
+###### Competencias de Cristian Ruscio.
+
+* Supervision de todas las partes. Limpieza y comentarios de código en html y css
+* Usuario tester para deteccion de errores y envio de sugerencias.
+
+###### Competencias de Pablo Lires
+
+* Diseño de las nuevas secciones en Illustrator para tres vistas (mobile, tablet, escritorio).
+* Maquetacion de la cuenta de usuarios (html-css).
+* Maquetacion de la seccion de recuperacion de la contraseña (html-css).
+* Confeccion y comentarios de nuevas funciones del sitio.

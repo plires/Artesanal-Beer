@@ -1,3 +1,10 @@
+<?php
+
+/* Include Funciones */
+include_once('includes/funciones.php');
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

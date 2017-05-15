@@ -1,3 +1,25 @@
+<?php
+
+if ($_SESSION) {
+    $id = $_SESSION['id'];
+    $nombre = $_SESSION['nombre'];
+    $apellido = $_SESSION['apellido'];
+    $tipo_documento = $_SESSION['tipo_documento'];
+    $numero = $_SESSION['numero'];
+    $genero = $_SESSION['genero'];
+    $estado_civil = $_SESSION['estado_civil'];
+    $ocupacion = $_SESSION['ocupacion'];
+    $cuit = $_SESSION['cuit'];
+    $email = $_SESSION['email'];
+    $usuario = $_SESSION['user'];
+    $archivo = $_SESSION['archivo'];
+    $recovery = $_SESSION['recovery'];
+} else {
+    $usuario = 'Invitado';
+}
+
+?>
+
 <header>
 
 <!--Container start-->
@@ -20,11 +42,19 @@
 
         <nav class='main-menu'>
             <ul>
+                <li class="<?php if (!$_SESSION) echo "no_visible"; ?>"><a href="destroy.php"><i class="ion-android-exit"></i>Logout</a></li>
                 <li><a <?php if ($activo == "home") echo "class=\"nav_activa_menu_lateral\""; ?> href="index.php"><i class="ion-home"></i>Home</a></li>
                 <li><a <?php if ($activo == "faq") echo "class=\"nav_activa_menu_lateral\""; ?> href="faq.php"><i class="ion-help"></i>Faqs</a></li>
                 <li><a <?php if ($activo == "register") echo "class=\"nav_activa_menu_lateral\""; ?> href="register.php"><i class="ion-clipboard"></i>Registrate</a></li>
-                <li><a <?php if ($activo == "login") echo "class=\"nav_activa_menu_lateral\""; ?> href="login.php"><i class="ion-person"></i>Login</a></li>
+
+                <li <?php if($_SESSION) echo "class=\"no_visible\""; ?>>
+                    <a <?php if ($activo == "login") echo "class=\"nav_activa_menu_lateral\"";?> href="login.php"><i class="ion-person"></i>Login</a>
+                </li>
+
                 <li><a <?php if ($activo == "carrito") echo "class=\"nav_activa_menu_lateral\""; ?> href="#"><i class="ion-android-cart"></i>Mi Carrito</a></li>
+
+                <li><a <?php if ($activo == "account") echo "class=\"nav_activa_menu_lateral\""; ?> href="account.php"><i class="ion-person"></i>Mi Cuenta</a></li>
+
                 <li><a <?php if ($activo == "contacto") echo "class=\"nav_activa_menu_lateral\""; ?> href="#"><i class="ion-email"></i>Contacto</a></li>
                 <li>
                     <div class="dropdown">
@@ -69,7 +99,7 @@
                 <ul>
                     <li><a <?php if ($activo == "home") echo "class=\"nav_activa\""; ?> href="index.php">Home</a></li>
                     <li><a <?php if ($activo == "faq") echo "class=\"nav_activa\""; ?> href="faq.php">Faqs</a></li>
-                    <li><a <?php if ($activo == "register") echo "class=\"nav_activa\""; ?> href="register.php">Registrate</a></li>
+                    <li><a <?php if ($activo == "register") echo "class=\"nav_activa \""; ?> href="register.php">Registrate</a></li>
                     <li><a <?php if ($activo == "contacto") echo "class=\"nav_activa\""; ?> href="#">Contacto</a></li>
                 </ul>
             </nav>
@@ -97,8 +127,10 @@
                     <input class="submit_search" type="submit" name="search_header" value="Buscar">
                 </form>
                 <div class="cuenta">
-                    <p class='user-name'>Hola, Invitado</p>
-                    <a href="login.php" class='home-icon'><i class="ion-ios-home"></i></a>
+                    <a class="logout <?php if (!$_SESSION) echo " no_visible"; ?>" href="destroy.php"><i class="ion-android-exit"></i> Logout</a>
+                    <a class="logout <?php if ($_SESSION) echo " no_visible"; ?>" href="login.php"><i class="ion-person"></i> Login</a>
+                    <p class='user-name'>Hola, <?=$usuario?></p>
+                    <a href="account.php" class="home-icon<?php if (!$_SESSION) echo " no_visible"; ?>"><i class="ion-ios-home"></i></a>
                 </div>
             </div>
 

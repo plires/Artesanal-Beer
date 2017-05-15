@@ -38,7 +38,7 @@ a {
 /* HEADER START */
 
 /*en la version mobile desaparecemos los iconos del carrito y otros*/
-a.search-icon, p.user-name, a.home-icon, a.carro-icon, .container-icons-bar, .secondary-menu, .container-product-menu-bar, #slider {
+a.search-icon, p.user-name, a.home-icon, a.carro-icon, .container-icons-bar, .secondary-menu, .container-product-menu-bar, #slider, a.logout {
   display: none;
 } {
   display: none;
@@ -47,6 +47,15 @@ a.search-icon, p.user-name, a.home-icon, a.carro-icon, .container-icons-bar, .se
 /*hover a todas las etiquetas a del header*/
 header a:hover {
 	opacity: 0.6;
+}
+
+/* boton logout */
+.logout{
+	color: #fcc112!important;
+	display: inline-block;
+	color: #ffffff;
+	font-size: 0.75em;
+	margin-right: 10px;
 }
 
 /*clase que activa en el NAV la seccion que esta siendo vista*/
@@ -494,7 +503,7 @@ cursor: pointer;
   padding: 15px 0 25px;
 }
 
-.register input, .register select{
+.register input, .register select, #account input, #account select{
 	margin-top: 5px;
 	margin-bottom: 15px;
 	padding: 10px;
@@ -556,6 +565,68 @@ input[type=checkbox]{
 fieldset{
   width: 95%;
   margin: auto;
+}
+
+
+/*Account*/
+
+#account{
+	overflow: hidden;
+	margin-bottom: 30px;
+}
+
+.errores, .sucess{
+	font-size: 0.85em;
+}
+
+.errores h5, .sucess h5{
+	margin: 0;
+	text-align: center;
+	font-size: 1em;
+}
+
+.sucess{
+	color: green;
+}
+
+.errores{
+	color: red;
+}
+
+.form_total{
+	width: 100%;
+	clear: both;
+}
+
+.account_img_user{
+	border-radius: 5px;
+	border: solid 2px #414141;
+}
+
+.archivo{
+	text-align: center!important;
+	padding: 0!important;
+	border: none!important;
+	font-size: 0.65em!important;
+}
+
+#account input, #account select{
+	border: solid 1px #cdcccc;
+}
+
+#account label{
+	text-align: left!important;
+}
+
+.contenedor_auto{
+	text-align: center;
+}
+
+#account form #guardar, #account form #editar{
+	width: 70%;
+  	background-color: #fcc112;
+  	color: #414141;
+  	font-size: 1.25em;
 }
 
 
@@ -673,6 +744,7 @@ section.fondo_color_principal{padding: 10px;margin-bottom: 30px; overflow: hidde
 .tipo_ligth {font-weight: lighter;}
 .padding_top_50 {padding-top: 50px;}
 .margin_bottom_30 {margin-bottom: 30px;}
+.no_visible {display: none!important;}
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 /*************************************************** COMUNES A TODO EL SITIO END ****************************************************/
 /*----------------------------------------------------------------------------------------------------------------------------------*/
@@ -701,7 +773,7 @@ section.fondo_color_principal{padding: 10px;margin-bottom: 30px; overflow: hidde
 	/*Header start*/
 
 	/*hacemos aparecer todos los elementos escondidos*/
-	a.search-icon, p.user-name, a.home-icon, a.carro-icon, .container-product-menu-bar, .secondary-menu {
+	a.search-icon, p.user-name, a.home-icon, a.carro-icon, .container-product-menu-bar, .secondary-menu, a.logout {
 		display: inline-block;
 	}
 
@@ -903,6 +975,23 @@ section.fondo_color_principal{padding: 10px;margin-bottom: 30px; overflow: hidde
 		margin-left: 15px;
 	}
 	/* register END */
+
+
+	/* Seccion Accounts START */
+	.cont_imagen{
+		margin: auto;
+		max-width: 44%;
+	}
+
+	.archivo{
+		font-size: 0.65em!important;
+	}
+
+	#account form #guardar, #account form #editar{
+		width: 40%;
+	}
+
+	/* Seccion Accounts END */
 
 
 
@@ -1111,6 +1200,14 @@ section.fondo_color_principal{padding: 10px;margin-bottom: 30px; overflow: hidde
 		width: 50%;
 		margin: auto;
 	}
+
+	/* Seccion Accounts START */
+
+	.archivo{
+		font-size: 0.75em!important;
+	}
+
+	/* Seccion Accounts END */
 }
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
@@ -1187,6 +1284,30 @@ section.fondo_color_principal{padding: 10px;margin-bottom: 30px; overflow: hidde
 		font-size: 2.5em;
 		line-height: 40px;
 	}
+
+	/* Seccion Accounts START */
+
+	.form_mitad_izq{
+		float: left;
+		max-width: 48.5%;
+		margin-right: 1.5%;
+	}
+
+	.form_mitad_der{
+		float: right;
+		max-width: 48.5%;
+		margin-left: 1.5%;
+	}
+
+	.form_mitad_der input{
+		margin-bottom: 27px!important;
+	}
+
+	.archivo{
+		font-size: 1em!important;
+	}
+
+	/* Seccion Accounts END */
 
 }
 

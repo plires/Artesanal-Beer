@@ -1,3 +1,10 @@
+<?php
+
+/* Include Funciones */
+include_once('includes/funciones.php');
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -64,7 +71,7 @@
 				<a href="#" class="boton_carrito boton_amarillo fadeIn">Agregar</a>
 			</article>
 
-			<article class="item animated fadeInDown">
+			<article class="item animated fadeInUp">
 				<a href="#"><img src="images/product-2.jpg" alt="product 2"></a>
 				<h2>Cerveza Rubia Suave</h2>
 				<p title="Honey beer.">Honey beer.</p>
@@ -94,7 +101,7 @@
 				<a href="#" class="boton_carrito boton_amarillo">Agregar</a>
 			</article>
 
-			<article class="item animated fadeInDown">
+			<article class="item animated fadeInUp">
 				<a href="#"><img src="images/product-5.jpg" alt="product 5"></a>
 				<h2>Botellón 600 cm3.</h2>
 				<p title="Kit fundamental.">Kit fundamental.</p>
