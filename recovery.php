@@ -1,33 +1,33 @@
 <?php
 /* Include Funciones */
-include_once('includes/funciones.php');
+include_once('soporte.php');
 
-$error = "";
-$sucess = "";
-$mail = "";
 
-if ($_SESSION) {
-	header('Location: account.php');
+if ($auth->estaLogueado()) {
+	header('Location:account.php?id=' . $objetoUsuarioLogueado->getId());exit;
 }
 
+$error = "";
+$mail = "";
+$sucess = "";
 
 if ($_POST) {
-	$errores = validarInformacionRecovery($_POST);
+	$errores = $validador->validarInformacionRecovery($_POST, $db->getRepositorioUsuarios());
 
 	if (count($errores) == 0) {
-		$sucess = "Por favor chequee su casilla de email y siga las instrucciones para recuperar su contraseña.";
 
-		$mail = $_POST['correo'];
-		$usuario = buscarPorMail($mail);
+		// Logueo al usuario
+		$usuarioALoguear = $db->getRepositorioUsuarios()->buscarPorMail($_POST['mail']);
+		if ($soporte == 'json') {
+		$usuarioALoguear = $usuarioALoguear->toArray();
+		}
+  		$auth->loguear($usuarioALoguear['id_usuario']);
 
-		// Logueo el usuario
-		logeoDeUsuario($usuario);
-
-		$_SESSION['recovery'] = 'on'; // Variable que indica a la pagina account que el usuario viene de recovery.
-		$_SESSION['modo'] = ''; // habilito los input
-		header('Location: account.php');
+  		// creo el usuario
+  		$objetoUsuarioLogueado = Usuario::crearDesdeBaseDatosArray($usuarioALoguear);
+        header('Location:account.php?id=' . $objetoUsuarioLogueado->getId() . '?inputs=enabled');exit;
 	} else {
-		$error = $errores['correo'];
+		$error = $errores['mail'];
 	}
 }
 
@@ -87,7 +87,7 @@ if ($_POST) {
 							<legend>Recuperacion de tu password</legend>
 
 							<label for="mail">Ingresa el email con el cual te registraste</label>
-							<input type="email" name="correo" >
+							<input type="email" name="mail" >
 
 							<div class="text_center">
 								<button id="enviar" type="submit" name="enviar">Enviar</button>						

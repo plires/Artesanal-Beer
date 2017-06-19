@@ -1,7 +1,7 @@
 <?php
 
 /* Include Funciones */
-include_once('includes/funciones.php');
+include_once('soporte.php');
 
 ?>
 

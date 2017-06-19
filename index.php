@@ -1,7 +1,7 @@
 <?php
 
 /* Include Funciones */
-include_once('includes/funciones.php');
+include_once('soporte.php');
 
 ?>
 
@@ -166,14 +166,14 @@ include_once('includes/funciones.php');
 
 
 			<article class="avatar_usuario">
-				<a href="#"><img src="images/ususario-1.jpg" alt="ususario 1"></a>
+				<a href="#"><img src="images/usuario-1.jpg" alt="usuario 1"></a>
 				<h4>Carlos Vazquez</h4>
 				<hr>
 				<p>La plataforma de "Artesanal Beer" me ayudo muchisimo, solo tengo que producir!</p>
 			</article>
 
 			<article class="avatar_usuario">
-				<a href="#"><img src="images/ususario-2.jpg" alt="ususario 2"></a>
+				<a href="#"><img src="images/usuario-2.jpg" alt="usuario 2"></a>
 				<h4>Brenda Schik</h4>
 				<hr>
 				<p>Los costos que maneja la plataforma son muy razonables. Hace solo 5 meses que la uso!</p>
@@ -181,14 +181,14 @@ include_once('includes/funciones.php');
 			<span style="clear: both;"></span>
 
 			<article class="avatar_usuario">
-				<a href="#"><img src="images/ususario-3.jpg" alt="ususario 3"></a>
+				<a href="#"><img src="images/usuario-3.jpg" alt="usuario 3"></a>
 				<h4>Jose Perez</h4>
 				<hr>
 				<p>Con la plataforma pude ofrecer a mis clientes la posibilidad de pagar con credito y debito!</p>
 			</article>
 
 			<article class="avatar_usuario">
-				<a href="#"><img src="images/ususario-4.jpg" alt="ususario 4"></a>
+				<a href="#"><img src="images/usuario-4.jpg" alt="usuario 4"></a>
 				<h4>Juan Pest</h4>
 				<hr>
 				<p>Producia mi cerveza pero no contaba con logistica. La plataforma de Artesanal Beer lo soluciono!</p>
@@ -346,7 +346,7 @@ include_once('includes/funciones.php');
 	</section>
 	<!--Section caracteristicas del servicio end-->
 
-	<!--Include HEADER-->
+	<!--Include FOOTER-->
 	<?php include_once('includes/footer.php'); ?>
 
 	<!--Scripts Menu-->

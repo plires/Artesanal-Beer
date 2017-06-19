@@ -1,17 +1,17 @@
 <?php
 /* Include Funciones */
-include_once('includes/funciones.php');
+include_once('soporte.php');
 
-if ($_SESSION) {
-	header('Location: account.php');
+if ($auth->estaLogueado()) {
+	header('Location:account.php?id=' . $objetoUsuarioLogueado->getId());exit;
 }
 
 $nombre = "";
 $apellido = "";
 $numero = "";
 $cuit = "";
-$correo = "";
-$user = "";
+$mail = "";
+$usuario = "";
 $pass = "";
 $cpass = "";
 $archivo = "";
@@ -20,69 +20,56 @@ $sucess ="";
 
 /* Creo los array para formar los select */
 
-$arrayTipoDocumento = [
-	"DNI" => "DNI",
-	"Pasaporte" => "Pasaporte",
-	"Libreta_enrolamiento" => "Libreta de enrolamiento",
-	"Libreta_civica" => "Libreta Cívica"
-];
-
-$arrayGenero = [
-	"Masculino" => "Masculino",
-	"Femenino" => "Femenino",
-	"Sin_Datos" => "Sin Datos"
-];
-
-$arrayEstadoCivil = [
-	"Soltero" => "Soltero",
-	"Casado" => "Casado",
-	"Viudo/a" => "Viudo/a",
-	"Divorciado/a" => "Divorciado/a",
-	"Otro" => "Otro"
-];
-
-$arrayOcupacion = [
-	"Monotributista" => "Monotributista",
-	"Autonomo" => "Autonomo",
-	"Pensionado" => "Pensionado",
-	"Jubilado" => "Jubilado",
-	"ama_de_casa" => "Ama de casa",
-	"Estudiante" => "Estudiante",
-	"Desocupado" => "Desocupado",
-	"Empleado" => "Empleado",
-	"Otro" => "Otro"
-];
+$arrayTipoDocumento = $db->getRepositorioUsuarios()->traerTodosTiposDocumento();
+$arrayGenero = $db->getRepositorioUsuarios()->traerTodosGenero();
+$arrayEstadoCivil = $db->getRepositorioUsuarios()->traerTodosEstadoCivil();
+$arrayOcupacion = $db->getRepositorioUsuarios()->traerTodosOcupacion();
 
 $errores = [];
 
 if ($_POST) {
-	$errores = validarInformacion($_POST);
+
+	$errores = $validador->validarInformacion($_POST, $db->getRepositorioUsuarios());
 
 	if (count($errores) == 0) { // No hubo errores
-		$sucess = 'Datos guardados satisfactoriamente';
 		$mensajeError ="";
 
-		// Creo el Usuario
-		$usuario = crearUsuario($_POST);
+		// No hay errores
+		$usuario = $_POST;
 
-		//Guardo el usuario
-		guardarUsuario($usuario);
+		$usuario["pass"] = Usuario::hashPassword($usuario["pass"]);
+		$usuario = Usuario::crearDesdeArray($usuario);
 
-		// Logueo el usuario
-		logeoDeUsuario($usuario);
+		$errores = $usuario->guardarImagen("archivo", $errores);
 
-		//Redirijo a la seccion de cuenta de usuario con la variable que indica el registro
-		$_SESSION['modo'] = 'lectura';
-        header("Location:account.php");
-	} else { // Hubo errores.
+
+		if (!$errores) {
+			$sucess = 'Datos guardados satisfactoriamente';
+			// Guardo en BDD
+			$usuario->guardar($db->getRepositorioUsuarios());
+
+			// Logueo al usuario
+			$usuarioALoguear = $db->getRepositorioUsuarios()->buscarPorMail($usuario->getMail());
+			if ($soporte == 'sql') {
+				$conversion = Usuario::crearDesdeBaseDatosArray($usuarioALoguear);
+				$usuarioALoguear = $conversion;
+			}
+			$auth->loguear($usuarioALoguear->getId());
+	        header("Location:account.php?id=" . $_SESSION['idUser']);
+		}
+	}
+
+
+	if ($errores) {
+		// Hubo errores.
 		$mensajeError = 'Sabemos que pedimos son muchos datos...pero lo hacemos por tu bien :)';
 
 		if (!isset($errores['nombre'])) {
 			$nombre = $_POST['nombre'];
 		}
 
-		if (!isset($errores['surname'])) {
-			$apellido = $_POST['surname'];
+		if (!isset($errores['apellido'])) {
+			$apellido = $_POST['apellido'];
 		}
 
 		if (!isset($errores['numero'])) {
@@ -93,12 +80,12 @@ if ($_POST) {
 			$cuit = $_POST['cuit'];
 		}
 
-		if (!isset($errores['correo'])) {
-			$correo = $_POST['correo'];
+		if (!isset($errores['mail'])) {
+			$mail = $_POST['mail'];
 		}
 
-		if (!isset($errores['user'])) {
-			$user = $_POST['user'];
+		if (!isset($errores['usuario'])) {
+			$usuario = $_POST['usuario'];
 		}
 
 		if (!isset($errores['archivo'])) {
@@ -128,6 +115,7 @@ if ($_POST) {
 
 	<!--Include HEADER-->
 	<?php include_once('includes/header.php'); ?>
+
 
 	<!-- container start -->
 	<div class="container">
@@ -172,29 +160,27 @@ if ($_POST) {
 						<fieldset>
 							<legend>Datos Personales</legend>
 
-							<label for="name">Nombre</label>
+							<label for="nombre">Nombre</label>
 							<input type="text" name="nombre" value="<?=$nombre?>">
 
-							<label>Apellido</label>
-							<input type="text" name="surname" value="<?=$apellido?>">
+							<label for="apellido">Apellido</label>
+							<input type="text" name="apellido" value="<?=$apellido?>">
 
 							<label for="document">Tipo de Documento</label>
 							<select name="document">
 								
 								<!-- Array dinamico para el select de documento START -->
 								<?php
-
-								foreach ($arrayTipoDocumento as $clave => $valor) { ?>
-
-									<?php if ($clave == $_POST['document']){ ?>
-										<option value="<?=$clave?>" selected><?=$valor?></option>			
+								foreach ($arrayTipoDocumento as $valor) { ?>
+									<?php
+									if ($valor == $_POST['document']){ ?>
+										<option value="<?=$valor['id']?>" selected><?=$valor['nombre']?></option>			
 									<?php } else { ?>
-										<option value="<?=$clave?>"><?=$valor?></option>
+										<option value="<?=$valor['id']?>"><?=$valor['nombre']?></option>
 									<?php } ?>
 
 								<?php
 								}
-
 								?>
 								<!-- Array dinamico para el select de documento END -->
 
@@ -208,18 +194,15 @@ if ($_POST) {
 
 								<!-- Array dinamico para el select de genero START -->
 								<?php
+								foreach ($arrayGenero as $valor) { ?>
 
-								foreach ($arrayGenero as $clave => $valor) { ?>
-
-									<?php if ($clave == $_POST['sex']){ ?>
-										<option value="<?=$clave?>" selected><?=$valor?></option>			
+									<?php if ($valor == $_POST['sex']){ ?>
+										<option value="<?=$valor['id']?>" selected><?=$valor['nombre']?></option>			
 									<?php } else { ?>
-										<option value="<?=$clave?>"><?=$valor?></option>
+										<option value="<?=$valor['id']?>"><?=$valor['nombre']?></option>
 									<?php } ?>
-
 								<?php
 								}
-
 								?>
 								<!-- Array dinamico para el select de genero END -->
 
@@ -230,18 +213,15 @@ if ($_POST) {
 								
 								<!-- Array dinamico para el select de estado civil START -->
 								<?php
+								foreach ($arrayEstadoCivil as $valor) { ?>
 
-								foreach ($arrayEstadoCivil as $clave => $valor) { ?>
-
-									<?php if ($clave == $_POST['social']){ ?>
-										<option value="<?=$clave?>" selected><?=$valor?></option>			
+									<?php if ($valor == $_POST['social']){ ?>
+										<option value="<?=$valor['id']?>" selected><?=$valor['nombre']?></option>			
 									<?php } else { ?>
-										<option value="<?=$clave?>"><?=$valor?></option>
+										<option value="<?=$valor['id']?>"><?=$valor['nombre']?></option>
 									<?php } ?>
-
 								<?php
 								}
-
 								?>
 								<!-- Array dinamico para el select de estado civil END -->
 
@@ -252,18 +232,15 @@ if ($_POST) {
 
 								<!-- Array dinamico para el select de ocupacion START -->
 								<?php
+								foreach ($arrayOcupacion as $valor) { ?>
 
-								foreach ($arrayOcupacion as $clave => $valor) { ?>
-
-									<?php if ($clave == $_POST['occupation']){ ?>
-										<option value="<?=$clave?>" selected><?=$valor?></option>			
+									<?php if ($valor == $_POST['occupation']){ ?>
+										<option value="<?=$valor['id']?>" selected><?=$valor['nombre']?></option>			
 									<?php } else { ?>
-										<option value="<?=$clave?>"><?=$valor?></option>
+										<option value="<?=$valor['id']?>"><?=$valor['nombre']?></option>
 									<?php } ?>
-
 								<?php
 								}
-
 								?>
 								<!-- Array dinamico para el select de ocupacion END -->
 
@@ -272,11 +249,11 @@ if ($_POST) {
 							<label for="cuit">CUIT</label>
 							<input type="number" name="cuit" value="<?=$cuit?>">
 
-							<label for="correo">E-mail</label>
-							<input type="email" name="correo" value="<?=$correo?>">
+							<label for="mail">E-mail</label>
+							<input type="email" name="mail" value="<?=$mail?>">
 
 							<label>Nombre de usuario</label>
-							<input type="text" name="user" value="<?=$user?>">
+							<input type="text" name="usuario" value="<?=$usuario?>">
 
 							<label for="pass">Ingrese su contraseña</label>
 							<input type="password" name="pass" value="<?=$pass?>">

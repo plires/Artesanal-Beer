@@ -1,66 +1,80 @@
 <?php
 /* Include Funciones */
-include_once('includes/funciones.php');
+include_once('soporte.php');
 
-if (!$_SESSION) {
-	header('Location: login.php');
-} elseif ($_SESSION['recovery'] != 'on') {
-	$_SESSION['modo'] = 'lectura'; // lockeo los input
+
+if (!$auth->estaLogueado()) {
+	header("location:login.php");exit;
+} else {
+	$inputs = "disabled";
+	$inputs = "disabled";
 }
 
-
-/* Si se presiono "Editar" */
-if (isset($_POST["editar"])) {
-
-	// habilito todos los inputs
-	$_SESSION['modo'] = '';
-
+if (isset($_GET['inputs'])) {
+	echo "entro";
+	$inputs = "enabled";
 }
 
 $errores = [];
 $sucess = "";
 
+/* Si se presiono "Editar" */
+if (isset($_POST["editar"])) {
+
+	// habilito todos los inputs
+	$inputs = "enabled";
+
+}
+
 /* Si se presiono "guardar" */
 if (isset($_POST["guardar"])) {
 
-	$errores = validarInformacionEditada($_POST);
+	$errores = $validador->validarEdicion($_POST, $db->getRepositorioUsuarios(), $objetoUsuarioLogueado);
 
+	// No hay errores
+	$usuario = $_POST;
+
+	$usuario["pass"] = Usuario::hashPassword($usuario["pass"]);
+	$usuario = Usuario::crearDesdeArray($usuario);
+	
 	if (count($errores) == 0) { // No hubo errores
 		$sucess = 'Datos guardados satisfactoriamente';
 		$mensajeError ="";
-		$_SESSION['modo'] = 'lectura';
+		
 
-		// capturo el id a editar y el nombre del archivo guardado
-		$idAEditar = $_POST['id'];
-		$archivo_cargado = $_SESSION['archivo'];
+		// Guardo en BDD
+		$usuario->guardar($db->getRepositorioUsuarios());
 
-		// Creo el usuario editado
-		$usuarioEditado = crearUsuarioEditado($_POST, $_SESSION, $_FILES, $idAEditar, $archivo_cargado);
+		// Si hay imagen nueva la subimos
+		if ($_FILES['archivo']['name'] != '') {
+			$usuario->guardarImagenNueva("archivo");
+		}
 
-		// piso el archivo a grabar sin el registro que se esta editando
-		$listaDeUsuarios = traerTodosMenosUno($idAEditar);
+		if ($soporte == 'sql') {
+			$arrayUsuarioLogueado = $db->getRepositorioUsuarios()->buscarPorId($_SESSION["idUser"]);
+	    	$objetoUsuarioLogueado = Usuario::crearDesdeBaseDatosArray($arrayUsuarioLogueado);
+		} else {
+			$usuario->guardar($db->getRepositorioUsuarios());
 
-		//Guardo los demas usuarios excepto el editado
-		editarUsuario($listaDeUsuarios);
-
-		// Guardo el usuario ya editado.
-		guardarUsuario($usuarioEditado);
-
-		// Logueo el usuario
-		logeoDeUsuario($usuarioEditado);
+			// Logueo al usuario
+			$usuarioALoguear = $db->getRepositorioUsuarios()->buscarPorMail($usuario->getMail());
+			$auth->loguear($usuarioALoguear->getId());
+			$objetoUsuarioLogueado = $auth->usuarioLogueado($db->getRepositorioUsuarios());	
+		}
+		
 
 		//Redirijo a la seccion de cuenta de usuario con la variable que indica el registro
-		$_SESSION['modo'] = 'lectura';
-        //header("Location:account.php");
+		$inputs = "disabled";
 	} else { // Hubo errores.
 		$mensajeError = 'Sabemos que pedimos son muchos datos...pero lo hacemos por tu bien :)';
+		$inputs = "disabled";
 
 		if (!isset($errores['nombre'])) {
 			$nombre = $_POST['nombre'];
 		}
 
-		if (!isset($errores['surname'])) {
-			$apellido = $_POST['surname'];
+		if (!isset($errores['apellido'])) {
+			$apellido = $_POST['apellido'];
 		}
 
 		if (!isset($errores['numero'])) {
@@ -71,17 +85,19 @@ if (isset($_POST["guardar"])) {
 			$cuit = $_POST['cuit'];
 		}
 
-		if (!isset($errores['correo'])) {
-			$correo = $_POST['correo'];
+		if (!isset($errores['mail'])) {
+			$mail = $_POST['mail'];
 		}
 
-		if (!isset($errores['user'])) {
-			$user = $_POST['user'];
+		if (!isset($errores['usuario'])) {
+			$usuario = $_POST['usuario'];
 		}
 
 		if (!isset($errores['archivo'])) {
 			$archivo_cargado = $_FILES['archivo']['name'];
 		}
+
+		$inputs = "enabled";
 
 	}
 
@@ -91,38 +107,10 @@ if (isset($_POST["guardar"])) {
 
 /* Creo los array para formar los select */
 
-$arrayTipoDocumento = [
-	"DNI" => "DNI",
-	"Pasaporte" => "Pasaporte",
-	"Libreta_enrolamiento" => "Libreta de enrolamiento",
-	"Libreta_civica" => "Libreta Cívica"
-];
-
-$arrayGenero = [
-	"Masculino" => "Masculino",
-	"Femenino" => "Femenino",
-	"Sin_Datos" => "Sin Datos"
-];
-
-$arrayEstadoCivil = [
-	"Soltero" => "Soltero",
-	"Casado" => "Casado",
-	"Viudo/a" => "Viudo/a",
-	"Divorciado/a" => "Divorciado/a",
-	"Otro" => "Otro"
-];
-
-$arrayOcupacion = [
-	"Monotributista" => "Monotributista",
-	"Autonomo" => "Autonomo",
-	"Pensionado" => "Pensionado",
-	"Jubilado" => "Jubilado",
-	"ama_de_casa" => "Ama de casa",
-	"Estudiante" => "Estudiante",
-	"Desocupado" => "Desocupado",
-	"Empleado" => "Empleado",
-	"Otro" => "Otro"
-];
+$arrayTipoDocumento = $db->getRepositorioUsuarios()->traerTodosTiposDocumento();
+$arrayGenero = $db->getRepositorioUsuarios()->traerTodosGenero();
+$arrayEstadoCivil = $db->getRepositorioUsuarios()->traerTodosEstadoCivil();
+$arrayOcupacion = $db->getRepositorioUsuarios()->traerTodosOcupacion();
 
 
 ?>
@@ -145,7 +133,9 @@ $arrayOcupacion = [
 	<?php $activo = "account"; ?>
 
 	<!--Include HEADER-->
+	<!--Include HEADER-->
 	<?php include_once('includes/header.php'); ?>
+
 
 	<!-- section resister start -->
 	<section id="account">
@@ -156,7 +146,7 @@ $arrayOcupacion = [
 			<!--Sub - container Start-->
 			<div class="sub_container">
 
-				<h1 class="text_center titulo_h1">Cuenta de Usuario de <?=$usuario?></h1>
+				<h1 class="text_center titulo_h1">Cuenta de Usuario de <?=$objetoUsuarioLogueado->getNombre() .' '. $objetoUsuarioLogueado->getApellido()?></h1>
 				<hr class="margin_bottom_30">
 
 
@@ -183,32 +173,33 @@ $arrayOcupacion = [
 
 				<form action="" method="post" enctype="multipart/form-data">
 
-					<input name="id" class="no_visible" type="text" value="<?=$id?>">
+					<input name="id" class="no_visible" type="text" value="<?=$objetoUsuarioLogueado->getId()?>">
 
 					<div class="form_mitad_izq cont_imagen">
-						<img class="account_img_user" src="upload/<?=$archivo?>" alt="<?=$archivo?>">
-						<input class="archivo" type="file" name="archivo" id="archivo" <?php if ($_SESSION['modo'] == 'lectura') echo "disabled"; ?>>
+						<img class="account_img_user" src="<?=$objetoUsuarioLogueado->getFoto()?>" alt="<?=$objetoUsuarioLogueado->getNombre()?>">
+						<input <?php if ($inputs == "disabled") echo "disabled"; ?> class="archivo" type="file" name="archivo" id="archivo">
 					</div>
 
 					<div class="form_mitad_der">
 						<label for="nombre">Nombre</label>
-						<input <?php if ($_SESSION['modo'] == 'lectura') echo "disabled"; ?> type="text" name="nombre" value="<?=$nombre?>">
+						<input <?php if ($inputs == "disabled") echo "disabled"; ?> type="text" name="nombre" 
+						value="<?=$objetoUsuarioLogueado->getNombre()?>">
 
-						<label>Apellido</label>
-						<input type="text" name="surname" <?php if ($_SESSION['modo'] == 'lectura') echo "disabled"; ?> value="<?=$apellido?>">
+						<label for="apellido">Apellido</label>
+						<input <?php if ($inputs == "disabled") echo "disabled"; ?> type="text" name="apellido" value="<?=$objetoUsuarioLogueado->getApellido()?>">
 
 						<label for="document">Tipo de Documento</label>
-							<select name="document" <?php if ($_SESSION['modo'] == 'lectura') echo "disabled"; ?>>
+						<select <?php if ($inputs == "disabled") echo "disabled"; ?> name="document">
 
 							<!-- Array dinamico para el select de Estado civil START -->
 							<?php
 
-							foreach ($arrayTipoDocumento as $clave => $valor) { ?>
+							foreach ($arrayTipoDocumento as $valor) { ?>
 
-								<?php if ($clave == $tipo_documento){ ?>
-									<option value="<?=$clave?>" selected><?=$valor?></option>			
+								<?php if ($valor['id'] == $objetoUsuarioLogueado->getTipoDocumento()){ ?>
+									<option value="<?=$valor['id']?>" selected><?=$valor['nombre']?></option>			
 								<?php } else { ?>
-									<option value="<?=$clave?>"><?=$valor?></option>
+									<option value="<?=$valor['id']?>"><?=$valor['nombre']?></option>
 								<?php } ?>
 
 							<?php
@@ -220,20 +211,20 @@ $arrayOcupacion = [
 						</select>
 
 						<label for="numero">Numero</label><br>
-						<input type="number" name="numero" <?php if ($_SESSION['modo'] == 'lectura') echo "disabled"; ?> value="<?=$numero?>">
+						<input <?php if ($inputs == "disabled") echo "disabled"; ?> type="number" name="numero" value="<?=$objetoUsuarioLogueado->getNumero()?>">
 
 						<label for="sex">Genero</label>
-						<select name="sex" <?php if ($_SESSION['modo'] == 'lectura') echo "disabled"; ?>>
+						<select <?php if ($inputs == "disabled") echo "disabled"; ?> name="sex" <?php if ($inputs == "disabled") echo "disabled"; ?>>
 
 							<!-- Array dinamico para el select de Estado civil START -->
 							<?php
 
-							foreach ($arrayGenero as $clave => $valor) { ?>
+							foreach ($arrayGenero as $valor) { ?>
 
-								<?php if ($clave == $genero){ ?>
-									<option value="<?=$clave?>" selected><?=$valor?></option>			
+								<?php if ($valor['id'] == $objetoUsuarioLogueado->getGenero()){ ?>
+									<option value="<?=$valor['id']?>" selected><?=$valor['nombre']?></option>			
 								<?php } else { ?>
-									<option value="<?=$clave?>"><?=$valor?></option>
+									<option value="<?=$valor['id']?>"><?=$valor['nombre']?></option>
 								<?php } ?>
 
 							<?php
@@ -249,17 +240,17 @@ $arrayOcupacion = [
 					<div class="form_total">
 
 						<label for="social">Estado Civil</label>
-						<select name="social" <?php if ($_SESSION['modo'] == 'lectura') echo "disabled"; ?>>
+						<select <?php if ($inputs == "disabled") echo "disabled"; ?> name="social">
 
 							<!-- Array dinamico para el select de Estado civil START -->
 							<?php
 
-							foreach ($arrayEstadoCivil as $clave => $valor) { ?>
+							foreach ($arrayEstadoCivil as $valor) { ?>
 
-								<?php if ($clave == $estado_civil){ ?>
-									<option value="<?=$clave?>" selected><?=$valor?></option>			
+								<?php if ($valor['id'] == $objetoUsuarioLogueado->getEstadoCivil()){ ?>
+									<option value="<?=$valor['id']?>" selected><?=$valor['nombre']?></option>			
 								<?php } else { ?>
-									<option value="<?=$clave?>"><?=$valor?></option>
+									<option value="<?=$valor['id']?>"><?=$valor['nombre']?></option>
 								<?php } ?>
 
 							<?php
@@ -271,17 +262,17 @@ $arrayOcupacion = [
 						</select>						
 
 						<label for="occupation">Ocupación</label>
-						<select name="occupation" <?php if ($_SESSION['modo'] == 'lectura') echo "disabled"; ?>>
+						<select <?php if ($inputs == "disabled") echo "disabled"; ?> name="occupation" <?php if ($inputs == "disabled") echo "disabled"; ?>>
 							
 							<!-- Array dinamico para el select de ocupacion START -->
 							<?php
 
-							foreach ($arrayOcupacion as $clave => $valor) { ?>
+							foreach ($arrayOcupacion as $valor) { ?>
 
-								<?php if ($clave == $ocupacion){ ?>
-									<option value="<?=$clave?>" selected><?=$valor?></option>			
+								<?php if ($valor['id'] == $objetoUsuarioLogueado->getOcupacion()){ ?>
+									<option value="<?=$valor['id']?>" selected><?=$valor['nombre']?></option>			
 								<?php } else { ?>
-									<option value="<?=$clave?>"><?=$valor?></option>
+									<option value="<?=$valor['id']?>"><?=$valor['nombre']?></option>
 								<?php } ?>
 
 							<?php
@@ -293,23 +284,23 @@ $arrayOcupacion = [
 						</select>
 
 						<label for="cuit">CUIT</label>
-						<input type="number" name="cuit" <?php if ($_SESSION['modo'] == 'lectura') echo "disabled"; ?> value="<?=$cuit?>">
+						<input <?php if ($inputs == "disabled") echo "disabled"; ?> type="number" name="cuit" value="<?=$objetoUsuarioLogueado->getCuit()?>">
+						<label for="mail">E-mail</label>
+						<input <?php if ($inputs == "disabled") echo "disabled"; ?> type="email" name="mail" value="<?=$objetoUsuarioLogueado->getMail()?>">
 
-						<label for="correo">E-mail</label>
-						<input type="email" name="correo" <?php if ($_SESSION['modo'] == 'lectura') echo "disabled"; ?> value="<?=$email?>">
+						<label for="usuario">Usuario</label>
+						<input <?php if ($inputs == "disabled") echo "disabled"; ?> type="text" name="usuario" value="<?=$objetoUsuarioLogueado->getUsuario()?>">
 
-						<label for="user">Usuario</label>
-						<input type="text" name="user" <?php if ($_SESSION['modo'] == 'lectura') echo "disabled"; ?> value="<?=$usuario?>">
+						<label <?php if ($inputs == "disabled") echo "class=\"no_visible\""; ?> for="pass">Ingrese su contraseña</label>
+						<input <?php if ($inputs == "disabled") echo "class=\"no_visible\""; ?> type="password" name="pass">
 
-						<label <?php if ($_SESSION['modo'] == 'lectura') echo "class=\"no_visible\""; ?> for="pass">Ingrese su contraseña</label>
-						<input type="password" name="pass" <?php if ($_SESSION['modo'] == 'lectura') echo "class=\"no_visible\" disabled"; ?>>
-
-						<label <?php if ($_SESSION['modo'] == 'lectura') echo "class=\"no_visible\""; ?> for="cpass">Reingrese su contraseña</label>
-						<input type="password" name="cpass" <?php if ($_SESSION['modo'] == 'lectura') echo "class=\"no_visible\" disabled"; ?>>
+						<label <?php if ($inputs == "disabled") echo "class=\"no_visible\""; ?> for="cpass">Reingrese su contraseña</label>
+						<input <?php if ($inputs == "disabled") echo "class=\"no_visible\""; ?> type="password" name="cpass">
 
 						<div class="contenedor_auto">
 							<input id="editar" type="submit" name="editar" value="Editar">
-							<input id="guardar" type="submit" name="guardar" value="Guardar cambios" <?php if ($_SESSION['modo'] == 'lectura') echo "disabled"; ?>>
+							<input <?php if ($inputs == "disabled") echo "disabled"; ?> id="guardar" type="submit" name="guardar" value="Guardar cambios">
+							<input id="borrar" onclick="confirmacion('<?=$objetoUsuarioLogueado->getUsuario()?>')" type="submit" name="borrar" value="Borrar Usuario">
 						</div>
 
 					</div>
@@ -328,6 +319,7 @@ $arrayOcupacion = [
 	<?php include_once('includes/footer.php'); ?>
 
 	<!--Scripts Menu-->
+	<script src="js/confirmaciones.js"></script>
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/index.js"></script>
 	

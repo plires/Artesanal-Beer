@@ -1,18 +1,14 @@
 <?php
 /* Include Funciones */
-include_once('includes/funciones.php');
-
-if ($_SESSION) {
-	header('Location: account.php');
-}
+include_once('soporte.php');
 
 // Pregunto si el usuario hizoclick en "recordame" para reactivar session
-if (isset($_COOKIE["id"])) {
-	actualizarSession($_COOKIE["id"]);
-	header('Location: account.php');
+if (isset($_COOKIE["idUser"])) {
+	actualizarSession($_COOKIE["idUser"]);
+	header('Location: account.php?id=' . $objetoUsuarioLogueado->getId());
 }
 
-$user = "";
+$usuario ="";
 $pass = "";
 $errores = [];
 
@@ -20,23 +16,32 @@ $mensajeError ="";
 $sucess ="";
 
 if ($_POST) {
-	$errores = verificaLogeo($_POST);
+
+	$errores = $validador->validarLogin($_POST, $db->getRepositorioUsuarios());
 
 	if (count($errores) == 0) {
-		$usuario = logeoDeUsuario($_POST);
+		
+		// Logueo al usuario
+		$usuarioALoguear = $db->getRepositorioUsuarios()->buscarPorUsuario($_POST["usuario"]);
+  		$auth->loguear($usuarioALoguear['id_usuario']);
+
+  		if ($soporte =='sql') {
+  			// creo la instancia desde un array.
+  			$objetoUsuarioLogueado = Usuario::crearDesdeBaseDatosArray($usuarioALoguear);
+  		} else {
+  			$objetoUsuarioLogueado = Usuario::crearDesdeArrayJSON($usuarioALoguear);
+  		}
 
 		// Grabo la coockie con el id del usuario
 		if (isset($_POST["recordame"])) {
-			setcookie("id", $usuario["id"], time() + 60 * 60 * 24 * 30);
+			setcookie("idUser", $usuarioALoguear["id_usuario"], time() + 60 * 60 * 24 * 30);
 		}
 
-		// Redirijo al listado del usuario en modo lectura
-		$_SESSION['modo'] = 'lectura';
-        header("Location:account.php");
+        header('Location:account.php?id=' . $objetoUsuarioLogueado->getId());exit;
 	}
 
-	if (!isset($errores['user'])) {
-		$user = $_POST['user'];
+	if (!isset($errores['usuario'])) {
+		$usuario = $_POST['usuario'];
 	}
 
 }
@@ -106,8 +111,8 @@ if ($_POST) {
 						<fieldset>
 							<legend>Login de Usuario</legend>
 
-							<label for="user">Usuario</label>
-							<input type="text" name="user" value="<?=$user?>">
+							<label for="usuario">Usuario</label>
+							<input type="text" name="usuario" value="<?=$usuario?>">
 
 							<label for="pass">Contraseña</label>
 							<input type="password" name="pass" value="">

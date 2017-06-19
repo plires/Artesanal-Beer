@@ -44,10 +44,13 @@ a.search-icon, p.user-name, a.home-icon, a.carro-icon, .container-icons-bar, .se
   display: none;
 }
 
+#logo:hover {opacity: 1};
+
 /*hover a todas las etiquetas a del header*/
 header a:hover {
 	opacity: 0.6;
 }
+
 
 /* boton logout */
 .logout{
@@ -127,7 +130,7 @@ header a:hover {
 
 /*menu desplegable*/
 
-.dropbtn {
+.dropbtn, .administracion {
 background-color: rgba(252, 193, 18);
 color: #414042;
 padding: 16px;
@@ -166,7 +169,7 @@ cursor: pointer;
     background-color: rgba(255, 255, 255, 0.9);
 }
 
-.dropdown:hover .dropbtn {
+.dropdown:hover .dropbtn, .dropbtn:hover {
     background-color: #fee7b3;
 }  
 
@@ -182,6 +185,7 @@ cursor: pointer;
     left: 12px;
     width: 230px;
   }
+
 
 /*menu hamburguesa (mobile)*/
 .container-menu-bar a{
@@ -233,6 +237,13 @@ cursor: pointer;
     padding: 5px;
     vertical-align: middle;
 }
+
+.soporte_leyenda{
+	
+	margin-left: 15px;
+	color: #666666;
+}
+
 /* HEADER END */
 
 /*H3 Home*/
@@ -503,7 +514,7 @@ cursor: pointer;
   padding: 15px 0 25px;
 }
 
-.register input, .register select, #account input, #account select{
+.register input, .register select, #account input, #account select, #sistema input{
 	margin-top: 5px;
 	margin-bottom: 15px;
 	padding: 10px;
@@ -603,6 +614,16 @@ fieldset{
 	border: solid 2px #414141;
 }
 
+.admin_img_user{
+	max-width: 200px;
+	border-radius: 5px;
+	border: solid 2px #414141;
+}
+
+.titulo_admin{
+	margin: -5px 0 10px;
+}
+
 .archivo{
 	text-align: center!important;
 	padding: 0!important;
@@ -622,15 +643,23 @@ fieldset{
 	text-align: center;
 }
 
-#account form #guardar, #account form #editar{
+#account form #guardar, #account form #editar, form #borrar {
 	width: 70%;
   	background-color: #fcc112;
   	color: #414141;
   	font-size: 1.25em;
 }
 
-
-
+#sistema, #migra {
+	display: block!important;
+	margin: auto;
+	padding: 10px;
+  	background-color: #fcc112;
+  	color: #414141;
+  	font-size: 1.25em;
+  	border:none;
+  	border-radius: 3px;
+}
 /*aca EMPIEZA EL FOOTER*/
 
 #footer {
@@ -739,7 +768,7 @@ section.fondo_color_principal{padding: 10px;margin-bottom: 30px; overflow: hidde
 .color_secundario {color: #414141;}
 .left {float: left;}
 .right {float: right;}
-.tipo_normal{font-variant: normal;}
+.tipo_normal{font-variant: normal!important;}
 .color_blanco {color: white;}
 .tipo_ligth {font-weight: lighter;}
 .padding_top_50 {padding-top: 50px;}
@@ -987,8 +1016,8 @@ section.fondo_color_principal{padding: 10px;margin-bottom: 30px; overflow: hidde
 		font-size: 0.65em!important;
 	}
 
-	#account form #guardar, #account form #editar{
-		width: 40%;
+	#account form #guardar, #account form #editar, form #borrar{
+		width: 32%;
 	}
 
 	/* Seccion Accounts END */

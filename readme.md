@@ -80,3 +80,37 @@ Maquetación de nuevas secciones:
 * Maquetacion de la cuenta de usuarios (html-css).
 * Maquetacion de la seccion de recuperacion de la contraseña (html-css).
 * Confeccion y comentarios de nuevas funciones del sitio.
+
+1.0.2
+* Versión Beta
+
+### Descripción
+
+En esta version se agrego se agrego el soporte de repositorio con tecnologia sql (El sistema puede funcionar con cualquier soporte).
+Se agrego un pequeño backend desde donde se puede cambiar el tipo de soporte de Json a SQL. Tambien se agrewgo la funcionabilidad
+de migrar el repositorio Json a SQL automáticamente.
+Tambien se creo un script que genere la estructura del SQL cuando se ejecute la primera vez en este modo de soporte.
+Tambien se migro a el paradigma de objetos en todo el codigo del sitio.
+
+Maquetación de nuevas secciones:
+* Backend de Admin.
+
+###### Competencias de Santiago Nuñez
+
+* Desarrollo de nuevas funciones.
+
+* Migracion de parte del codigo a objetos
+
+* Supervision de todas las partes. Limpieza y comentarios de código en html y css
+* Usuario tester para deteccion de errores y envio de sugerencias.
+
+
+###### Competencias de Pablo Lires
+
+* Diseño y maquetacion del backend admin.
+* Desarrollo de nuevas funciones.
+
+* Migracion de parte del codigo a objetos
+
+* Supervision de todas las partes. Limpieza y comentarios de código en html y css
+* Usuario tester para deteccion de errores y envio de sugerencias.

@@ -1,25 +1,3 @@
-<?php
-
-if ($_SESSION) {
-    $id = $_SESSION['id'];
-    $nombre = $_SESSION['nombre'];
-    $apellido = $_SESSION['apellido'];
-    $tipo_documento = $_SESSION['tipo_documento'];
-    $numero = $_SESSION['numero'];
-    $genero = $_SESSION['genero'];
-    $estado_civil = $_SESSION['estado_civil'];
-    $ocupacion = $_SESSION['ocupacion'];
-    $cuit = $_SESSION['cuit'];
-    $email = $_SESSION['email'];
-    $usuario = $_SESSION['user'];
-    $archivo = $_SESSION['archivo'];
-    $recovery = $_SESSION['recovery'];
-} else {
-    $usuario = 'Invitado';
-}
-
-?>
-
 <header>
 
 <!--Container start-->
@@ -28,7 +6,7 @@ if ($_SESSION) {
     <!--Sub - container start-->
     <div class="sub_container">
         <div class="header_logo">
-            <img src="images/logo-header.png" alt="logo sitio">
+            <a id="logo" href="index.php"><img src="images/logo-header.png" alt="logo sitio"></a>
         </div>
 
         <div class="container-icons-bar">
@@ -39,21 +17,20 @@ if ($_SESSION) {
                 <li><a href="#"><i class="ion-social-linkedin"></i></a></li>
             </ul>
         </div>
-
         <nav class='main-menu'>
             <ul>
-                <li class="<?php if (!$_SESSION) echo "no_visible"; ?>"><a href="destroy.php"><i class="ion-android-exit"></i>Logout</a></li>
+                <li class="<?php if (!$auth->estaLogueado()) echo "no_visible"; ?>"><a href="destroy.php"><i class="ion-android-exit"></i>Logout</a></li>
                 <li><a <?php if ($activo == "home") echo "class=\"nav_activa_menu_lateral\""; ?> href="index.php"><i class="ion-home"></i>Home</a></li>
                 <li><a <?php if ($activo == "faq") echo "class=\"nav_activa_menu_lateral\""; ?> href="faq.php"><i class="ion-help"></i>Faqs</a></li>
                 <li><a <?php if ($activo == "register") echo "class=\"nav_activa_menu_lateral\""; ?> href="register.php"><i class="ion-clipboard"></i>Registrate</a></li>
 
-                <li <?php if($_SESSION) echo "class=\"no_visible\""; ?>>
+                <li <?php if($auth->estaLogueado()) echo "class=\"no_visible\""; ?>>
                     <a <?php if ($activo == "login") echo "class=\"nav_activa_menu_lateral\"";?> href="login.php"><i class="ion-person"></i>Login</a>
                 </li>
 
                 <li><a <?php if ($activo == "carrito") echo "class=\"nav_activa_menu_lateral\""; ?> href="#"><i class="ion-android-cart"></i>Mi Carrito</a></li>
 
-                <li><a <?php if ($activo == "account") echo "class=\"nav_activa_menu_lateral\""; ?> href="account.php"><i class="ion-person"></i>Mi Cuenta</a></li>
+                <li><a <?php if ($activo == "account") echo "class=\"nav_activa_menu_lateral\""; ?> href="<?php if ($auth->estaLogueado()) echo " account.php?id=" . $_SESSION['idUser']; ?>"><i class="ion-person"></i>Mi Cuenta</a></li>
 
                 <li><a <?php if ($activo == "contacto") echo "class=\"nav_activa_menu_lateral\""; ?> href="#"><i class="ion-email"></i>Contacto</a></li>
                 <li>
@@ -82,8 +59,9 @@ if ($_SESSION) {
                             <a href="#">Eventos</a>
                             <a href="#">Insumos</a>
                         </div>
-                </div>
+                    </div>
                 </li>
+                <li class="<?php if (!$auth->estaLogueado() || $objetoUsuarioLogueado->getUsuario() != 'administrador') echo "no_visible"; ?>"><a href="admin.php"><i class="ion-gear-b"></i>Administracion</a></li>
                 <li><a href="#"><i class="ion-social-facebook"></i>Facebook</a></li>
                 <li><a href="#"><i class="ion-social-twitter"></i>Twitter</a></li>
                 <li><a href="#"><i class="ion-social-instagram"></i>Instagram</a></li>
@@ -127,10 +105,14 @@ if ($_SESSION) {
                     <input class="submit_search" type="submit" name="search_header" value="Buscar">
                 </form>
                 <div class="cuenta">
-                    <a class="logout <?php if (!$_SESSION) echo " no_visible"; ?>" href="destroy.php"><i class="ion-android-exit"></i> Logout</a>
-                    <a class="logout <?php if ($_SESSION) echo " no_visible"; ?>" href="login.php"><i class="ion-person"></i> Login</a>
-                    <p class='user-name'>Hola, <?=$usuario?></p>
-                    <a href="account.php" class="home-icon<?php if (!$_SESSION) echo " no_visible"; ?>"><i class="ion-ios-home"></i></a>
+                    <a class="logout <?php if (!$auth->estaLogueado()) echo " no_visible"; ?>" href="destroy.php"><i class="ion-android-exit"></i> Logout</a>
+                    <a class="logout <?php if ($auth->estaLogueado()) echo " no_visible"; ?>" href="login.php"><i class="ion-person"></i> Login</a>
+                    <p class='user-name'><?php if ($auth->estaLogueado()) {
+                        echo "Hola, ". $objetoUsuarioLogueado->getUsuario();
+                    } else {
+                        echo "Hola, invitado";
+                    } ?> </p>
+                    <a href="<?php if ($auth->estaLogueado()) echo " account.php?id=" . $_SESSION['idUser']; ?>" class="home-icon<?php if (!$auth->estaLogueado()) echo " no_visible"; ?>"><i class="ion-ios-home"></i></a>
                 </div>
             </div>
 
@@ -170,7 +152,9 @@ if ($_SESSION) {
                         <a href="#">Insumos</a>
                     </div>
                 </div>
+                <button onclick="window.location.href='admin.php'" class="dropbtn <?php if (!$auth->estaLogueado() || $objetoUsuarioLogueado->getUsuario() != 'administrador') echo "no_visible"; ?>">Administracion del sitio</button>
             </div>
+            <span class="soporte_leyenda">Soporte: <?php echo $soporte;  ?></span>
             <a class='carro-icon' href="#"><i class="ion-ios-cart"></i> </a>
 
             </div>
