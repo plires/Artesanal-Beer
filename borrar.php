@@ -13,6 +13,6 @@ $usuario->borrar($db->getRepositorioUsuarios());
 
 $auth->logout();
 
-header("location: register.php");exit;
+header("location: login.php");exit;
 
 ?>

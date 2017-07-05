@@ -52,7 +52,7 @@ header a:hover {
 
 /* boton logout */
 .logout{
-	color: #fcc112!important;
+	color: #4A96D2!important;
 	display: inline-block;
 	color: #ffffff;
 	font-size: 0.75em;
@@ -61,7 +61,7 @@ header a:hover {
 
 /*clase que activa en el NAV la seccion que esta siendo vista*/
 .nav_activa{
-	color: #fcc112!important;
+	color: #4A96D2!important;
 }
 
 /*clase que activa en el NAV la seccion que esta siendo vista*/
@@ -85,7 +85,7 @@ header a:hover {
 /*icono menu hamburguesa*/
 .ion-navicon-round{
 	font-size: 3em;
-	color: #fcc112;
+	color: #4A96D2;
 }
 
 /*NAV oculto del mobile*/
@@ -94,7 +94,7 @@ header a:hover {
     left: 0;
     top: 92px;
     display: inline-block;
-    background-color: #fcc112;
+    background-color: #4A96D2;
     width: 80%;
     height: auto;
     z-index: 2;
@@ -195,7 +195,7 @@ cursor: pointer;
 
 /*Contenedor del buscador*/
 .container-search-bar{
-  background: #fcc112;
+  background: #4A96D2;
   padding: 10px 5px;
   overflow: hidden;
 }
@@ -221,10 +221,10 @@ cursor: pointer;
 }
 
 .home-icon{
-    color: #414141;
+    color: #123274;
     margin: 10px 0px 10px 10px;
     text-align: center;
-    background: #fcc112;
+    background: #4A96D2;
     line-height: 28px;
     display: inline-block;
     text-align: center;
@@ -239,7 +239,7 @@ cursor: pointer;
 .soporte_leyenda{
 	
 	margin-left: 15px;
-	color: #666666;
+	color: #ffffff;
 }
 
 #contador{
@@ -247,15 +247,15 @@ cursor: pointer;
 	margin-right: 10px;
 	float: right;
 	font-size: 0.75em;
-	color: #666666;
+	color: #ffffff;
 }
 
 /* HEADER END */
 
 /*H3 Home*/
 .h3_home{
-	background-color: #414141;
-	color: #fcc112;
+	background-color: #123274;
+	color: #4A96D2;
 	padding: 15px;
 	border-radius: 10px;
 	text-align: center;
@@ -266,7 +266,7 @@ cursor: pointer;
 .item {
 	position: relative;
 	box-shadow: 0px 0px 3px #888888;
-	color: #414141;
+	color: #123274;
 	overflow: hidden;
 	border-radius: 10px;
 	margin-bottom: 30px;
@@ -275,7 +275,7 @@ cursor: pointer;
 .item h2 {
 	white-space:nowrap;
 	font-size: 1.5em;
-	color: #414141;
+	color: #123274;
 	padding: 5px 10px;
 	border-bottom: solid 1px #999999;
 	margin-bottom: -10px;
@@ -461,8 +461,8 @@ cursor: pointer;
 
 .newsletter_enviar{
 	width: 50%!important;
-	background-color: #fcc112!important;
-	color: #414141;
+	background-color: #4A96D2!important;
+	color: #123274;
 	border: none;
 	padding: 10px!important;
 	border-radius: 5px;
@@ -480,7 +480,7 @@ cursor: pointer;
 
 	.faq_preguntas{
 		display: inline-block;
-		color: #414141;
+		color: #123274;
 		font-size: 1.25em;
 		margin-bottom: 10px;
 	}
@@ -491,8 +491,8 @@ cursor: pointer;
 
 	.h2_faq{
 		padding: 10px;
-		color: #414141;
-		background-color: #fcc112;
+		color: #123274;
+		background-color: #4A96D2;
 		font-size: 1em;
 		margin-bottom: 15px;
 	}
@@ -502,7 +502,7 @@ cursor: pointer;
 		display: inline-block;
 		margin-top: 5px;
 		font-size: 1.5em;
-		color: #414141;
+		color: #123274;
 		vertical-align: middle;		
 	}
 
@@ -617,13 +617,13 @@ fieldset{
 
 .account_img_user{
 	border-radius: 5px;
-	border: solid 2px #414141;
+	border: solid 2px #123274;
 }
 
 .admin_img_user{
 	max-width: 200px;
 	border-radius: 5px;
-	border: solid 2px #414141;
+	border: solid 2px #123274;
 }
 
 .titulo_admin{
@@ -651,8 +651,8 @@ fieldset{
 
 #account form #guardar, #account form #editar, form #borrar {
 	width: 70%;
-  	background-color: #fcc112;
-  	color: #414141;
+  	background-color: #4A96D2;
+  	color: #123274;
   	font-size: 1.25em;
 }
 
@@ -660,8 +660,8 @@ fieldset{
 	display: block!important;
 	margin: auto;
 	padding: 10px;
-  	background-color: #fcc112;
-  	color: #414141;
+  	background-color: #4A96D2;
+  	color: #123274;
   	font-size: 1.25em;
   	border:none;
   	border-radius: 3px;
@@ -672,8 +672,8 @@ fieldset{
 	overflow: hidden;
 	text-align: center;
 	color: #caced4;
-	background-color: #414141;
-  	border-top: 25px solid #fcc112;
+	background-color: #123274;
+  	border-top: 25px solid #4A96D2;
 }
 
 #footer p {
@@ -748,7 +748,7 @@ fieldset{
 .boton_gris{
 	display: inline-block;
 	color: white;
-	background-color: #414141;
+	background-color: #123274;
 	border: solid 2px #2d2d2d;
 	border-radius: 5px;
 	padding: 5px;
@@ -759,19 +759,19 @@ fieldset{
 	display: inline-block;
 	color: white;
 	font-size: 1.31em;
-	background-color: #fcc112;
+	background-color: #4A96D2;
 	border: solid 2px #e9b311;
 	border-radius: 5px;
 	padding: 5px;
 }
-.activa{color: #fcc112;}
+.activa{color: #4A96D2;}
 .titulo_h1{ color: #414042;}
 .text_center {text-align: center;} /* alinea los textos */
 section.fondo_color_principal{padding: 10px;margin-bottom: 30px; overflow: hidden; clear: both;}
-.fondo_color_principal {background-color: #fcc112;}
-.fondo_color_secundario {background-color: #414141;}
-.color_principal {color: #fcc112;}
-.color_secundario {color: #414141;}
+.fondo_color_principal {background-color: #4A96D2;}
+.fondo_color_secundario {background-color: #123274;}
+.color_principal {color: #4A96D2;}
+.color_secundario {color: #123274;}
 .left {float: left;}
 .right {float: right;}
 .tipo_normal{font-variant: normal!important;}
@@ -822,12 +822,12 @@ section.fondo_color_principal{padding: 10px;margin-bottom: 30px; overflow: hidde
 	}
 
 	.header_fondo_gris{
-		background-color: #414042;
+		background-color: #123274;
 		width: 100%;
 	}
 
 	.header_fondo_amarillo{
-		background-color: #fcc112;
+		background-color: #4A96D2;
 		width: 100%;
 	}
 
@@ -861,7 +861,7 @@ section.fondo_color_principal{padding: 10px;margin-bottom: 30px; overflow: hidde
 		display: inline-block;
 		padding: 10px 0px 10px 10px;
 		text-decoration: none;
-		color: #414141;
+		color: #123274;
 	}
 
 	/*buscador header*/
@@ -888,7 +888,7 @@ section.fondo_color_principal{padding: 10px;margin-bottom: 30px; overflow: hidde
 	}
 
 	.container-search-bar{
-	background: #414141;
+	background: #123274;
 	}
 
 	.container-search-bar input{
@@ -912,7 +912,7 @@ section.fondo_color_principal{padding: 10px;margin-bottom: 30px; overflow: hidde
 
 	.container-icons-bar ul li a{
 		display: inline-block;   
-		color: #414141;
+		color: #123274;
 		font-size: 2em;
 	}
 
@@ -942,8 +942,8 @@ section.fondo_color_principal{padding: 10px;margin-bottom: 30px; overflow: hidde
 
 	.carro-icon, .tema-icon{
 		float: right;
-		color: #fcc112;
-		background: #414141;
+		color: #4A96D2;
+		background: #123274;
 		width: 40px;
 		height: 40px;
 		padding: 5px;
@@ -1149,7 +1149,7 @@ section.fondo_color_principal{padding: 10px;margin-bottom: 30px; overflow: hidde
 		padding: 10px;
 		background-color: #e9b311;
 		border: solid 1px #000;
-		color: #414141;
+		color: #123274;
 		border-radius: 5px;
 	}
 
@@ -1277,7 +1277,7 @@ section.fondo_color_principal{padding: 10px;margin-bottom: 30px; overflow: hidde
 		padding: 10px;
 		background-color: #e9b311;
 		border: solid 1px #000;
-		color: #414141;
+		color: #123274;
 		border-radius: 5px;
 	}
 	/* Slide Home END */

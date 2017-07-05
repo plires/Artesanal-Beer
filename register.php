@@ -106,7 +106,7 @@ if ($_POST) {
 	<link href="css/ionicons.min.css" rel="stylesheet">
 	<link href="css/normalize.css" rel="stylesheet">
 	<link href="css/animate.min.css" rel="stylesheet">
-	<link href="css/styles.css" rel="stylesheet">
+	<link id="cssArchivo" href="css/styles.css" rel="stylesheet">
 </head>
 <body>
 
@@ -155,16 +155,16 @@ if ($_POST) {
 			    <div class="register">
 
 					<!-- formulario start -->
-				    <form action="" method="post" enctype="multipart/form-data">
+				    <form action="" method="post" onsubmit="return validacion()" enctype="multipart/form-data">
 				    
 						<fieldset>
 							<legend>Datos Personales</legend>
 
 							<label for="nombre">Nombre</label>
-							<input type="text" name="nombre" value="<?=$nombre?>">
+							<input id="nombre" type="text" name="nombre" value="<?=$nombre?>">
 
 							<label for="apellido">Apellido</label>
-							<input type="text" name="apellido" value="<?=$apellido?>">
+							<input id="apellido" type="text" name="apellido" value="<?=$apellido?>">
 
 							<label for="document">Tipo de Documento</label>
 							<select name="document">
@@ -187,7 +187,7 @@ if ($_POST) {
 							</select>
 
 							<label for="numero">Numero</label>
-							<input type="number" name="numero" value="<?=$numero?>">
+							<input id="number" type="number" name="numero" value="<?=$numero?>">
 
 							<label for="sex">Genero</label>
 							<select name="sex">
@@ -247,22 +247,22 @@ if ($_POST) {
 							</select>
 
 							<label for="cuit">CUIT</label>
-							<input type="number" name="cuit" value="<?=$cuit?>">
+							<input id="cuit" type="number" name="cuit" value="<?=$cuit?>">
 
 							<label for="mail">E-mail</label>
-							<input type="email" name="mail" value="<?=$mail?>">
+							<input id="mail" type="text" name="mail" value="<?=$mail?>">
 
 							<label>Nombre de usuario</label>
-							<input type="text" name="usuario" value="<?=$usuario?>">
+							<input id="usuario" type="text" name="usuario" value="<?=$usuario?>">
 
 							<label for="pass">Ingrese su contraseña</label>
-							<input type="password" name="pass" value="<?=$pass?>">
+							<input id="pass" type="password" name="pass" value="<?=$pass?>">
 
 							<label for="cpass">Reingrese su contraseña</label>
-							<input type="password" name="cpass">
+							<input id="cpass" type="password" name="cpass">
 
 							<label>Imágen de perfil</label>
-							<input type="file" name="archivo" id="archivo" value="<?=$archivo?>">
+							<input id="archivo" type="file" name="archivo" id="archivo" value="<?=$archivo?>">
 
 							<div class="contenedores_button">
 								<button id="enviar" type="submit" name="enviar">Enviar</button>
@@ -288,6 +288,11 @@ if ($_POST) {
 	<!--Scripts Menu-->
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/index.js"></script>
+	<script src="js/contador.js"></script>
+
+	<script>
+		window.onload = contador;
+	</script>
 	
 </body>
 </html>

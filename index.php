@@ -15,7 +15,7 @@ include_once('soporte.php');
 	<link href="css/ionicons.min.css" rel="stylesheet">
 	<link href="css/normalize.css" rel="stylesheet">
 	<link href="css/animate.min.css" rel="stylesheet">
-	<link href="css/styles.css" rel="stylesheet">
+	<link id="cssArchivo" href="css/styles.css" rel="stylesheet">
 </head>
 <body>
 	
@@ -352,6 +352,11 @@ include_once('soporte.php');
 	<!--Scripts Menu-->
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/index.js"></script>
-	
+	<script src="js/contador.js"></script>
+
+	<script>
+		window.onload = contador;
+	</script>
+
 </body>
 </html>

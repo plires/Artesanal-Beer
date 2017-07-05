@@ -155,7 +155,10 @@
                 <button onclick="window.location.href='admin.php'" class="dropbtn <?php if (!$auth->estaLogueado() || $objetoUsuarioLogueado->getUsuario() != 'administrador') echo "no_visible"; ?>">Administracion del sitio</button>
             </div>
             <span class="soporte_leyenda">Soporte: <?php echo $soporte;  ?></span>
-            <a class='carro-icon' href="#"><i class="ion-ios-cart"></i> </a>
+            <a class="carro-icon" href="#"><i class="ion-ios-cart"></i> </a>
+            <a class="tema-icon" href="#" onclick="cambiarArchivoCss('css/theme_blue.css')" title="Cambiar tema del sitio"><i class="ion-arrow-swap"></i> </a>
+            <a id="contador">Ya somos: <span id='registered-users'>1</span> usuarios registrados </a>
+
 
             </div>
             <!--Sub - container end-->

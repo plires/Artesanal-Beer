@@ -3,7 +3,6 @@
 Integrantes: 
 * [Pablo Lires](https://github.com/plires)
 * Santiago Nuñez
-* Cristian Ruscio
 
 ### Descripción
 
@@ -113,4 +112,29 @@ Maquetación de nuevas secciones:
 * Migracion de parte del codigo a objetos
 
 * Supervision de todas las partes. Limpieza y comentarios de código en html y css
+* Usuario tester para deteccion de errores y envio de sugerencias.
+
+1.0.3
+* Versión Beta
+
+### Descripción
+
+En esta version se agrego validacion en el front con javascript en el formulario de registracion.
+También hay un contador en la parte del header que se actualiza de a intervalos con el numero de usuarios registrados.
+Tabbién se agrego un botón en el header que cambia dinámicamente la hoja de estilos css. 
+
+###### Competencias de Santiago Nuñez
+
+* Desarrollo del script del contador.
+
+* Usuario tester para deteccion de errores y envio de sugerencias.
+
+###### Competencias de Pablo Lires
+
+* Desarrollo de la validacion del formulario de registracion con javascript.
+
+* Desarrollo del script del cambio de hojas de estilos css con javascript.
+
+* Supervision de todas las partes. Limpieza y comentarios de código en html y css y js.
+
 * Usuario tester para deteccion de errores y envio de sugerencias.
